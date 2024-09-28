@@ -1,38 +1,59 @@
-# Bookshelf App Starter Project
+# 📚 Bookshelf App
 
-Ini adalah starter project untuk siswa yang sedang mengerjakan tugas akhir kelas Belajar Membuat Front-End Web untuk Pemula.
+## Description
+Bookshelf App is a dynamic web application designed to help users manage their personal book collections. This project serves as a submission for the Dicoding online class, demonstrating proficiency in front-end web development and DOM manipulation.
 
-## Ketentuan Pengerjaan Tugas
+## Features
+- ➕ Add new books with detailed information (title, author, year, category)
+- ✅ Mark books as complete or incomplete
+- ⭐ Rate completed books
+- 🔍 Search functionality to easily find books
+- 🏷️ Category-based filtering
+- 📱 Responsive design for both mobile and desktop views
 
-Untuk mempermudah penilaian submission yang dikirim, Anda perlu memahami ketentuan-ketentuan berikut dalam mengerjakan tugas ini.
+## Tech Stack
+- HTML5
+- CSS3 (Tailwind CSS for styling)
+- JavaScript (Vanilla)
+- Local Storage for data persistence
 
-- Anda dilarang mengedit atau menghapus atribut `data-testid` pada elemen-elemen HTML.
-- Ini masih berkaitan dengan poin sebelumnya. Jika Anda memiliki kebutuhan seperti styling elemen dan perlu menambahkan atribut seperti class, itu tidak dilarang selama atribut `data-testid` beserta nilainya tidak diubah atau dihapus.
-- Dalam menampilkan data-data buku, Anda wajib memberikan beberapa atribut pada setiap elemennya.
+## Learning Outcomes
+Through this project, the following skills and concepts were applied:
+- Implementation of CRUD (Create, Read, Update, Delete) operations in JavaScript
+- Utilization of Local Storage for client-side data persistence
+- Creation of a responsive design using Tailwind CSS
+- Application of modern JavaScript ES6+ features
 
-  - `data-bookid`: menampung nilai ID masing-masing buku.
-  - `data-testid`: penanda jenis data buku yang ditampilkan. Berikut daftarnya.
-    - `bookItem`: elemen kontainer yang menampung data-data buku.
-    - `bookItemTitle`: judul buku
-    - `bookItemAuthor`: penulis buku
-    - `bookItemYear`: tahun rilis buku
-    - `bookItemIsCompleteButton`: tombol untuk mengubah kondisi buku dari “Belum selesai dibaca” menjadi “Selesai dibaca” atau sebaliknya.
-    - `bookItemDeleteButton`: tombol untuk menghapus buku.
-    - `bookItemEditButton`: tombol untuk mengubah data buku.
+## How to Run
+1. Clone this repository:
+   ```
+   git clone https://github.com/your-username/bookshelf-app.git
+   ```
+2. Navigate to the project directory:
+   ```
+   cd bookshelf-app
+   ```
+3. Open `index.html` in your preferred web browser.
 
-  Agar pengerjaan tugas lebih mudah, Anda dapat mengikuti templat buku berikut.
+## Usage
+- To add a book, fill out the form at the top of the page and click "Add Book".
+- Use the search bar to find specific books.
+- Filter books by category using the dropdown menu.
+- Click on a book to mark it as complete/incomplete or to edit its details.
 
-```html
-<div data-bookid="{{ ID_buku }}" data-testid="bookItem">
-  <h3 data-testid="bookItemTitle">{{ judul_buku }}</h3>
-  <p data-testid="bookItemAuthor">Penulis: {{ penulis_buku }}</p>
-  <p data-testid="bookItemYear">Tahun: {{ tahun_rilis_buku }}</p>
-  <div>
-    <button data-testid="bookItemIsCompleteButton">{{ tombol_untuk_ubah_kondisi }}</button>
-    <button data-testid="bookItemDeleteButton">{{ tombol_untuk_hapus }}</button>
-    <button data-testid="bookItemEditButton">{{ tombol_untuk_edit }}</button>
-  </div>
-</div>
-```
+## Contributing
+Contributions, issues, and feature requests are welcome! Feel free to check [issues page](https://github.com/your-username/bookshelf-app/issues) if you want to contribute.
 
-Selamat mengerjakan dan sukses selalu!
+## Author
+- Pribadi Ramadhan
+- GitHub: [@prabusemar](https://github.com/prabusemar)
+
+## Show your support
+Give a ⭐️ if this project helped you!
+
+## License
+This project is [MIT](https://choosealicense.com/licenses/mit/) licensed.
+
+## Acknowledgments
+- Thanks to Dicoding for the inspiration and guidance.
+- Icon credits: [Font Awesome](https://fontawesome.com/)
