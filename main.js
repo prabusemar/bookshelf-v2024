@@ -1,5 +1,6 @@
 const STORAGE_KEY = "BOOKSHELF_APPS";
 let books = [];
+let currentBookId = null;
 
 // Modal toggle functionality
 document.getElementById('help-icon').addEventListener('click', function () {
@@ -279,9 +280,37 @@ function removeBook(id) {
 function toggleBookStatus(id) {
     const book = books.find(book => book.id === id);
     if (book) {
-        book.isComplete = !book.isComplete;
+        if (!book.isComplete) {
+            // If marking as complete, show the rating modal
+            currentBookId = id;
+            document.getElementById('rating-modal').classList.remove('hidden');
+        } else {
+            // If marking as incomplete, just toggle the status
+            book.isComplete = false;
+            book.rating = null; // Remove the rating when marking as incomplete
+            saveToStorage();
+            renderBooks();
+
+            // Re-apply filter and search if active
+            const categoryFilter = document.getElementById("category-filter");
+            const searchInput = document.getElementById("search-book");
+
+            if (categoryFilter.value || searchInput.value) {
+                applySearchAndRender();
+            }
+        }
+    }
+}
+
+// Add event listeners for the rating modal
+document.getElementById('submit-rating').addEventListener('click', function () {
+    const rating = document.getElementById('modal-rating').value;
+    const book = books.find(book => book.id === currentBookId);
+    if (book) {
+        book.isComplete = true;
+        book.rating = parseInt(rating);
         saveToStorage();
-        renderBooks();  // Render all books
+        renderBooks();
 
         // Re-apply filter and search if active
         const categoryFilter = document.getElementById("category-filter");
@@ -291,7 +320,12 @@ function toggleBookStatus(id) {
             applySearchAndRender();
         }
     }
-}
+    document.getElementById('rating-modal').classList.add('hidden');
+});
+
+document.getElementById('cancel-rating').addEventListener('click', function () {
+    document.getElementById('rating-modal').classList.add('hidden');
+});
 
 // Initial render when the page loads
 document.addEventListener('DOMContentLoaded', () => {

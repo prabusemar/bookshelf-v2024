@@ -192,6 +192,28 @@
             </div>
         </div>
     </div>
+
+    <!-- Rating Modal -->
+    <div id="rating-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex justify-center items-center">
+        <div class="bg-white rounded-lg shadow-lg max-w-md w-full mx-4">
+            <div class="modal-content p-6">
+                <h2 class="text-xl font-bold mb-4">Rate this book</h2>
+                <p class="mb-4">Please rate the book before marking it as complete:</p>
+                <select id="modal-rating" class="w-full p-2 mb-4 border rounded">
+                    <option value="1">⭐ 1</option>
+                    <option value="2">⭐⭐ 2</option>
+                    <option value="3">⭐⭐⭐ 3</option>
+                    <option value="4">⭐⭐⭐⭐ 4</option>
+                    <option value="5">⭐⭐⭐⭐⭐ 5</option>
+                </select>
+                <div class="flex justify-end">
+                    <button id="submit-rating" class="bg-blue-600 text-white px-4 py-2 rounded-lg mr-2">Submit</button>
+                    <button id="cancel-rating" class="bg-gray-300 text-gray-800 px-4 py-2 rounded-lg">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 
 </html>
