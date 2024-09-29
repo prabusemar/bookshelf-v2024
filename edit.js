@@ -12,7 +12,7 @@ function saveChanges(updatedBook) {
     books[bookIndex] = updatedBook;
 
     localStorage.setItem(STORAGE_KEY, JSON.stringify(books));
-    alert("Buku berhasil diubah!");
+    alert("Book successfully updated!");
     window.location.href = "index.html"; // Redirect to main page
 }
 
@@ -21,11 +21,21 @@ function renderForm(book) {
     const titleInput = document.getElementById("title");
     const authorInput = document.getElementById("author");
     const yearInput = document.getElementById("year");
+    const ratingSection = document.getElementById("rating-section");
+    const ratingInput = document.getElementById("rating");
 
     // Populate form with book details
     titleInput.value = book.title;
     authorInput.value = book.author;
     yearInput.value = book.year;
+
+    // Show rating section only for completed books
+    if (book.isComplete) {
+        ratingSection.classList.remove("hidden");
+        ratingInput.value = book.rating || "1";
+    } else {
+        ratingSection.classList.add("hidden");
+    }
 
     // Submit the form with updated data
     const form = document.getElementById("edit-book-form");
@@ -38,6 +48,10 @@ function renderForm(book) {
             author: authorInput.value,
             year: yearInput.value,
         };
+
+        if (book.isComplete) {
+            updatedBook.rating = parseInt(ratingInput.value);
+        }
 
         saveChanges(updatedBook);
     });
@@ -56,13 +70,14 @@ function init() {
         if (book) {
             renderForm(book); // Populate form with book data
         } else {
-            alert("Buku tidak ditemukan.");
+            alert("Book not found.");
             window.location.href = "index.html"; // Redirect if book not found
         }
     } else {
-        alert("Tidak ada data buku.");
-        window.location.href = "index.html";
+        alert("No book data available.");
+        window.location.href = "index.html"; // Redirect to main page
     }
 }
 
-init(); // Call to initialize the page
+// Run initialization
+init();
