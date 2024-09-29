@@ -35,6 +35,14 @@ isCompleteCheckbox.addEventListener("change", () => {
     }
 });
 
+// Helper function to create empty shelf message
+function createEmptyShelfMessage(message) {
+    const emptyMessage = document.createElement("p");
+    emptyMessage.classList.add("text-gray-500", "text-center", "my-4", "italic");
+    emptyMessage.textContent = message;
+    return emptyMessage;
+}
+
 // Render books to the appropriate shelf (Completed or Incomplete)
 function renderBooks() {
     const incompleteBookList = document.getElementById("incomplete-book-list");
@@ -42,6 +50,9 @@ function renderBooks() {
 
     incompleteBookList.innerHTML = "";
     completedBookList.innerHTML = "";
+
+    let incompleteCount = 0;
+    let completeCount = 0;
 
     books.forEach((book) => {
         const bookCard = document.createElement("div");
@@ -114,10 +125,20 @@ function renderBooks() {
         // Append book card to either Completed or Incomplete shelf
         if (book.isComplete) {
             completedBookList.appendChild(bookCard);
+            completeCount++;
         } else {
             incompleteBookList.appendChild(bookCard);
+            incompleteCount++;
         }
     });
+
+    if (incompleteCount === 0) {
+        incompleteBookList.appendChild(createEmptyShelfMessage("No books in the reading list. Start adding some!"));
+    }
+
+    if (completeCount === 0) {
+        completedBookList.appendChild(createEmptyShelfMessage("No completed books yet. Keep reading!"));
+    }
 }
 
 // Add new book to the list with a timestamp, category, and rating (if completed)
@@ -192,6 +213,9 @@ function renderFilteredBooks(filteredBooks) {
     incompleteBookList.innerHTML = "";
     completedBookList.innerHTML = "";
 
+    let incompleteCount = 0;
+    let completeCount = 0;
+
     filteredBooks.forEach((book) => {
         const bookCard = document.createElement("div");
         bookCard.classList.add("bg-white", "rounded-lg", "shadow-md", "p-4", "relative");
@@ -257,77 +281,36 @@ function renderFilteredBooks(filteredBooks) {
 
         if (book.isComplete) {
             completedBookList.appendChild(bookCard);
+            completeCount++;
         } else {
             incompleteBookList.appendChild(bookCard);
+            incompleteCount++;
         }
     });
+
+    if (incompleteCount === 0) {
+        incompleteBookList.appendChild(createEmptyShelfMessage("No matching books in the reading list."));
+    }
+
+    if (completeCount === 0) {
+        completedBookList.appendChild(createEmptyShelfMessage("No matching completed books."));
+    }
 }
 
 function removeBook(id) {
     books = books.filter(book => book.id !== id);
     saveToStorage();
-    renderBooks();  // Render all books
-
-    // Re-apply filter and search if active
-    const categoryFilter = document.getElementById("category-filter");
-    const searchInput = document.getElementById("search-book");
-
-    if (categoryFilter.value || searchInput.value) {
-        applySearchAndRender();
-    }
+    renderBooks();
 }
 
 function toggleBookStatus(id) {
     const book = books.find(book => book.id === id);
     if (book) {
-        if (!book.isComplete) {
-            // If marking as complete, show the rating modal
-            currentBookId = id;
-            document.getElementById('rating-modal').classList.remove('hidden');
-        } else {
-            // If marking as incomplete, just toggle the status
-            book.isComplete = false;
-            book.rating = null; // Remove the rating when marking as incomplete
-            saveToStorage();
-            renderBooks();
-
-            // Re-apply filter and search if active
-            const categoryFilter = document.getElementById("category-filter");
-            const searchInput = document.getElementById("search-book");
-
-            if (categoryFilter.value || searchInput.value) {
-                applySearchAndRender();
-            }
-        }
+        book.isComplete = !book.isComplete;
+        saveToStorage();
+        renderBooks();
     }
 }
 
-// Add event listeners for the rating modal
-document.getElementById('submit-rating').addEventListener('click', function () {
-    const rating = document.getElementById('modal-rating').value;
-    const book = books.find(book => book.id === currentBookId);
-    if (book) {
-        book.isComplete = true;
-        book.rating = parseInt(rating);
-        saveToStorage();
-        renderBooks();
-
-        // Re-apply filter and search if active
-        const categoryFilter = document.getElementById("category-filter");
-        const searchInput = document.getElementById("search-book");
-
-        if (categoryFilter.value || searchInput.value) {
-            applySearchAndRender();
-        }
-    }
-    document.getElementById('rating-modal').classList.add('hidden');
-});
-
-document.getElementById('cancel-rating').addEventListener('click', function () {
-    document.getElementById('rating-modal').classList.add('hidden');
-});
-
-// Initial render when the page loads
-document.addEventListener('DOMContentLoaded', () => {
-    renderBooks();
-});
+// Initial render
+renderBooks();
